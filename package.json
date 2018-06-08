@@ -1,0 +1,39 @@
+{
+  "name": "express-app",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail -c \"yarn server\" \"yarn client\"",
+    "test": "mocha --exit"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "express-validation": "^1.0.2",
+    "font-awesome": "^4.7.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "joi": "^13.4.0",
+    "mongoose": "^5.1.4",
+    "morgan": "~1.9.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "semantic-ui-css": "^2.3.1",
+    "semantic-ui-react": "^0.81.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "concurrently": "^3.5.0",
+    "mocha": "^5.2.0"
+  }
+}
