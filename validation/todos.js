@@ -9,7 +9,7 @@ const options = {
 
 exports.post = {
 	body: {
-		label: Joi.string().required(),
+		label: Joi.string().allow('').required(),
 		done: Joi.boolean().required()
 	},
 	options
@@ -20,7 +20,7 @@ exports.update = {
 		id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
 	},
 	body: {
-		label: Joi.string().required(),
+		label: Joi.string().allow('').required(),
 		done: Joi.boolean().required()
 	},
 	options
