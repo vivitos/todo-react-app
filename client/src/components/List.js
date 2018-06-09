@@ -8,26 +8,27 @@ class List extends Component {
 		super(props)
 		this.state = {
 			todos: [],
-			isLoading: false
 		}
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.addTodo = this.addTodo.bind(this);
+		this.deleteTodo = this.deleteTodo.bind(this);
 	}
 
-	fetchTodos() {
-		this.setState({ isLoading: true });
-		todos: todoApi.getTodos().then(res => {
-			this.setState({
-				todos: res,
-				isLoading: false
-			})
-		}).catch(handleError)
-	}
-
-	addTodo() {
+	async fetchTodos() {
 		this.setState({
-			todos: [...this.state.todos, { label: '', done: false }]
+			todos: await todoApi.getTodos().catch(handleError)
 		})
+	}
+
+	async addTodo(event) {
+		await todoApi.createTodo({ label: '', done: false }).catch(handleError);
+		this.fetchTodos();
+	}
+
+	async deleteTodo(event, index) {
+		event.preventDefault();
+		await todoApi.removeTodo(this.state.todos[index].id).catch(handleError);
+		this.fetchTodos();
 	}
 
 	async handleInputChange(event, index, todo) {
@@ -35,7 +36,6 @@ class List extends Component {
 			done: event.target.type === 'checkbox' ? event.target.checked : this.state.todos[index].done,
 			label: event.target.type === 'text' ? event.target.value : this.state.todos[index].label
 		}).catch(handleError);
-
 		this.fetchTodos();
 	}
 
@@ -44,17 +44,12 @@ class List extends Component {
 	}
 
 	render() {
-		if (this.state.isLoading) return (
-			<span>
-				Loading
-			</span>
-		)
 		return (
 			<ul className="list">
 				{
 					this.state.todos.map((todo, index) => {
 						return (
-							<Todo key={index} index={index} todo={todo} onChange={this.handleInputChange}></Todo>
+							<Todo key={index} index={index} todo={todo} onChange={this.handleInputChange} deleteTodo={this.deleteTodo}></Todo>
 						)
 					})
 				}
