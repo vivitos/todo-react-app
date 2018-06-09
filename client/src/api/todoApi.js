@@ -28,9 +28,9 @@ const updateTodo = async (id, todo) => {
 	}
 }
 
-const removeTodo = async todo => {
+const removeTodo = async id => {
 	try {
-		const response = await axios.delete(`/todos/${todo.id}`)
+		const response = await axios.delete(`/todos/${id}`)
 		return response.data;
 	} catch (err) {
 		throw new Error(err);
