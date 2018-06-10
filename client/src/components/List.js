@@ -45,7 +45,7 @@ class List extends Component {
 
 	render() {
 		return (
-			<ul className="list">
+			<ul className="List">
 				{
 					this.state.todos.map((todo, index) => {
 						return (
@@ -53,7 +53,7 @@ class List extends Component {
 						)
 					})
 				}
-				<button onClick={this.addTodo}>New Todo</button>
+				<button type="button" className="mt-3 btn btn-outline-success" onClick={this.addTodo}>New Todo</button>
 			</ul>
 		)
 	}
