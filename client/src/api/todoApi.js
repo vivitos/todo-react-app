@@ -1,5 +1,4 @@
 import axios from 'axios';
-import handleError from '../utils/handleError'
 
 const createTodo = async todo => {
 	try {
