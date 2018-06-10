@@ -8,6 +8,7 @@ class List extends Component {
 		super(props)
 		this.state = {
 			todos: [],
+			isLoading: false
 		}
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.addTodo = this.addTodo.bind(this);
@@ -15,9 +16,14 @@ class List extends Component {
 	}
 
 	async fetchTodos() {
-		this.setState({
-			todos: await todoApi.getTodos().catch(handleError)
-		})
+		try {
+			this.setState({
+				todos: await todoApi.getTodos(),
+				isLoading: false
+			})
+		} catch (err) {
+			return handleError(err);
+		}
 	}
 
 	async addTodo(event) {
@@ -39,23 +45,29 @@ class List extends Component {
 		this.fetchTodos();
 	}
 
-	componentDidMount() {
-		this.fetchTodos();
+	async componentDidMount() {
+		this.setState({ isLoading: true });
+		await this.fetchTodos();
 	}
 
 	render() {
-		return (
-			<ul className="List">
-				{
-					this.state.todos.map((todo, index) => {
-						return (
-							<Todo key={index} index={index} todo={todo} onChange={this.handleInputChange} deleteTodo={this.deleteTodo}></Todo>
-						)
-					})
-				}
-				<button type="button" className="mt-3 btn btn-outline-success" onClick={this.addTodo}>New Todo</button>
-			</ul>
-		)
+		if (this.state.isLoading) {
+			return (
+				<p>The app is loading</p>
+			)
+		} else
+			return (
+				<ul className="List">
+					{
+						this.state.todos.map((todo, index) => {
+							return (
+								<Todo key={index} index={index} todo={todo} onChange={this.handleInputChange} deleteTodo={this.deleteTodo}></Todo>
+							)
+						})
+					}
+					<button type="button" className="mt-3 btn btn-outline-success" onClick={this.addTodo}>New Todo</button>
+				</ul>
+			)
 	}
 }
 
