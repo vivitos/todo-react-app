@@ -1,1 +1,1 @@
-module.exports = ({ id, label, done }) => ({ id, label, done })
+export default ({ id, label, done }) => ({ id, label, done })

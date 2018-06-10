@@ -1,13 +1,13 @@
-const express = require('express');
-const validate = require('express-validation');
-const todosValidation = require('../validation/todos');
+import express from 'express';
+import validate from 'express-validation';
+import { post, update, del } from '../validation/todos';
+import { listTodos, addTodo, updateTodo, deleteTodo } from '../controllers/todos';
 const router = express.Router();
-const todosController = require('../controllers/todos');
 
 /* GET users listing. */
-router.get('/todos', todosController.listTodos);
-router.post('/todos', [validate(todosValidation.post), todosController.addTodo]);
-router.put('/todos/:id', [validate(todosValidation.update), todosController.updateTodo]);
-router.delete('/todos/:id', [validate(todosValidation.delete), todosController.deleteTodo]);
+router.get('/todos', listTodos);
+router.post('/todos', [validate(post), addTodo]);
+router.put('/todos/:id', [validate(update), updateTodo]);
+router.delete('/todos/:id', [validate(del), deleteTodo]);
 
-module.exports = router;
+export default router;

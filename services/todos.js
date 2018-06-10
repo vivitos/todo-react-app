@@ -1,17 +1,17 @@
-const mongoose = require('mongoose');
-const TodosModel = require('../models/todos');
-var createError = require('http-errors');
+import mongoose from 'mongoose';
+import TodosModel from '../models/todos';
+import createError from 'http-errors';
 
 mongoose.connect('mongodb://127.0.0.1/test');
 
-exports.listTodos = (next) => {
+const list = (next) => {
     TodosModel.find({}, (err, todos) => {
         if (err) return next(err);
         return next(null, todos);
     })
 }
 
-exports.addTodo = async (todo) => {
+const add = async (todo) => {
     const doc = await TodosModel.create(todo);
     if (!doc) {
         throw new createError(404, 'document-not-created');
@@ -19,7 +19,7 @@ exports.addTodo = async (todo) => {
     return doc
 }
 
-exports.updateTodo =  async (id, update) => {
+const update = async (id, update) => {
     const doc = await TodosModel.findByIdAndUpdate(id, update, { new: true });
     if (!doc) {
         throw new createError(404, 'document-not-found');
@@ -27,10 +27,12 @@ exports.updateTodo =  async (id, update) => {
     return doc
 }
 
-exports.deleteTodo = async (id, next) => {
-    const deleted = await TodosModel.deleteOne({_id: id}).exec();
+const del = async (id, next) => {
+    const deleted = await TodosModel.deleteOne({ _id: id }).exec();
     if (!deleted || !deleted.n) {
         throw new createError(404, 'document-not-deleted');
     }
     return deleted;
 }
+
+export { list, add, update, del };

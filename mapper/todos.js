@@ -1,3 +1,3 @@
-const todoMapper = require('./todo')
+import todoMapper from './todo';
 
-module.exports = (docs) => docs.map((doc) => todoMapper(doc))
+export default (docs) => docs.map((doc) => todoMapper(doc))

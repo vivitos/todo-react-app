@@ -7,7 +7,7 @@ const options = {
 	allowUnknownParams: false
 }
 
-exports.post = {
+const post = {
 	body: {
 		label: Joi.string().allow('').required(),
 		done: Joi.boolean().required()
@@ -15,7 +15,7 @@ exports.post = {
 	options
 }
 
-exports.update = {
+const update = {
 	params: {
 		id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
 	},
@@ -26,9 +26,11 @@ exports.update = {
 	options
 }
 
-exports.delete = {
+const del = {
 	params: {
 		id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
 	},
 	options
 }
+
+export { post, update, del };

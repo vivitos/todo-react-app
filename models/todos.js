@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-module.exports = mongoose.model('Todos', new Schema({
+export default mongoose.model('Todos', new Schema({
     label: {
         type: String,
         required: function () {
